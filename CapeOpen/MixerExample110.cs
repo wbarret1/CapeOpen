@@ -29,6 +29,7 @@ namespace CapeOpen
     [CapeOpen.CapeAboutAttribute("US Environmental Protection Agency\nCincinnati, Ohio")]
     [CapeOpen.CapeConsumesThermoAttribute(true)]
     [CapeOpen.CapeSupportsThermodynamics11Attribute(true)]
+    [CapeOpen.CapeUnitOperation(true)]
     [System.Runtime.InteropServices.ClassInterface(System.Runtime.InteropServices.ClassInterfaceType.None)]
     public class MixerExample110 : CapeUnitBase
     {

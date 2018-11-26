@@ -265,6 +265,52 @@ namespace CapeOpen
     };
 
 
+    /// <summary>Provides information regarding whether the object is a CAPE-OPEN Unit Operation used  
+    /// during registration of a CAPE-OPEN object.</summary>
+    /// <remarks><para>
+    /// This attribute is used during the registration of a CAPE-OPEN object with the
+    /// COM registry to add the CapeUnitOperation_CATID to the object's registration key. </para>
+    /// </remarks>
+    /// <c>
+    /// [Serializable]
+    /// [System.Runtime.InteropServices.ComVisible(true)]
+    /// [System.Runtime.InteropServices.Guid("C79CAFD3-493B-46dc-8585-1118A0B5B4AB")]//ICapeThermoMaterialObject_IID)
+    /// [System.ComponentModel.Description("")]
+    /// [CapeOpen.CapeDescriptionAttribute("An example mixer unit operation.")]
+    /// [CapeOpen.CapeVersionAttribute("1.0")]
+    /// [CapeOpen.CapeVendorURLAttribute("http:\\www.epa.gov")]
+    /// [CapeOpen.CapeHelpURLAttribute("http:\\www.epa.gov")]
+    /// [CapeOpen.CapeAboutAttribute("US Environmental Protection Agency\nCincinnati, Ohio")]
+    /// [CapeOpen.CapeUnitOperation_CATID(true)]
+    /// public class CMixerExample : public CUnitBase
+    /// </c>
+    [System.Runtime.InteropServices.ComVisibleAttribute(false)]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Class)]
+    public class CapeUnitOperationAttribute : System.Attribute
+    {
+        private bool m_UnitOp;
+        /// <summary>Initializes a new instance of the CapeUnitOperationAttribute class.</summary>
+        /// <remarks>This attribute is used to indicate whether the object is a CAPE-OPEN Unit Operation.
+        /// It is also used by the COM registration function to place the appropriate CATID value in the system registry
+        /// for this object.</remarks>
+        /// <param name = "isUnit">The CAPE-OPEN component is a CAPE-OPEN Unit Operation object.</param>
+        public CapeUnitOperationAttribute(bool isUnit)
+        {
+            m_UnitOp = isUnit;
+        }
+
+        /// <summary>Gets the the about information.</summary>
+        /// <remarks>This property indicates whether the object uses the CAPE-OPEN Unti Operation interfaces.</remarks>
+        /// <value>A boolean value indicating whether the CAPE-OPEN component is a Unit Operation.</value>
+        public bool IsUnit
+        {
+            get
+            {
+                return m_UnitOp;
+            }
+        }
+    };
+
     /// <summary>Provides information regarding whether the object supports Flowsheet monitoring used  
     /// during registration of a CAPE-OPEN object.</summary>
     /// <remarks><para>
@@ -282,7 +328,7 @@ namespace CapeOpen
     /// [CapeOpen.CapeHelpURLAttribute("http:\\www.epa.gov")]
     /// [CapeOpen.CapeAboutAttribute("US Environmental Protection Agency\nCincinnati, Ohio")]
     /// [CapeOpen.CapeFlowsheetMonitoringAttribute(true)]
-    /// public class CMixerExample : public CUnitBase
+    /// public class WARAddIn : CapeObjectBase
     /// </c>
     [System.Runtime.InteropServices.ComVisibleAttribute(false)]
     [System.AttributeUsageAttribute(System.AttributeTargets.Class)]

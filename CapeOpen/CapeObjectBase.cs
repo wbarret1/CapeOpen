@@ -358,28 +358,19 @@ namespace CapeOpen
         [System.Runtime.InteropServices.ComRegisterFunction()]
         public static void RegisterFunction(Type t)
         {
+            RegistrationHelper(Microsoft.Win32.RegistryKey.OpenBaseKey(Microsoft.Win32.RegistryHive.ClassesRoot, Microsoft.Win32.RegistryView.Registry32), t);
+            RegistrationHelper(Microsoft.Win32.RegistryKey.OpenBaseKey(Microsoft.Win32.RegistryHive.ClassesRoot, Microsoft.Win32.RegistryView.Registry64), t);
+        }
+
+        private static void RegistrationHelper(Microsoft.Win32.RegistryKey baseKey, Type t)
+        {
             System.Reflection.Assembly assembly = t.Assembly;
             String versionNumber = (new System.Reflection.AssemblyName(assembly.FullName)).Version.ToString();
 
-            String keyname = String.Concat("CLSID\\{", t.GUID.ToString(), "}\\Implemented Categories");
-            Microsoft.Win32.RegistryKey catidKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(keyname, true);
+            String keyname = String.Concat("CLSID\\{", t.GUID.ToString(), "}");
+            Microsoft.Win32.RegistryKey classKey = baseKey.CreateSubKey(keyname);
+            Microsoft.Win32.RegistryKey catidKey = classKey.CreateSubKey("Implemented Categories");
             catidKey.CreateSubKey(COGuids.CapeOpenComponent_CATID);
-
-            keyname = String.Concat("CLSID\\{", t.GUID.ToString(), "}\\InprocServer32");
-            Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(keyname, true);
-            String[] keys = key.GetSubKeyNames();
-            for (int i = 0; i < keys.Length; i++)
-            {
-                if (keys[i] == versionNumber)
-                {
-                    key.DeleteSubKey(keys[i]);
-                }
-            }
-            key.SetValue("CodeBase", assembly.CodeBase);
-            key.Close();
-
-            key = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(String.Concat("CLSID\\{", t.GUID.ToString(), "}"), true);
-            keyname = String.Concat("CLSID\\{", t.GUID.ToString(), "}\\CapeDescription");
 
             Object[] attributes = t.GetCustomAttributes(false);
             String nameInfoString = t.FullName;
@@ -390,6 +381,7 @@ namespace CapeOpen
             String aboutInfoString = "";
             for (int i = 0; i < attributes.Length; i++)
             {
+                if (attributes[i] is CapeUnitOperationAttribute) catidKey.CreateSubKey(COGuids.CapeUnitOperation_CATID);
                 if (attributes[i] is CapeFlowsheetMonitoringAttribute) catidKey.CreateSubKey(COGuids.CATID_MONITORING_OBJECT);
                 if (attributes[i] is CapeConsumesThermoAttribute) catidKey.CreateSubKey(COGuids.Consumes_Thermo_CATID);
                 if (attributes[i] is CapeSupportsThermodynamics10Attribute) catidKey.CreateSubKey(COGuids.SupportsThermodynamics10_CATID);
@@ -401,16 +393,18 @@ namespace CapeOpen
                 if (attributes[i] is CapeHelpURLAttribute) helpURLInfoString = ((CapeHelpURLAttribute)attributes[i]).HelpURL;
                 if (attributes[i] is CapeAboutAttribute) aboutInfoString = ((CapeAboutAttribute)attributes[i]).About;
             }
+
+            Microsoft.Win32.RegistryKey descriptKey = classKey.CreateSubKey("CapeDescription");
+            descriptKey.SetValue("Name", nameInfoString);
+            descriptKey.SetValue("Description", descriptionInfoString);
+            descriptKey.SetValue("CapeVersion", versionInfoString);
+            descriptKey.SetValue("ComponentVersion", versionNumber);
+            descriptKey.SetValue("VendorURL", companyURLInfoString);
+            descriptKey.SetValue("HelpURL", helpURLInfoString);
+            descriptKey.SetValue("About", aboutInfoString);
             catidKey.Close();
-            key = Microsoft.Win32.Registry.ClassesRoot.CreateSubKey(keyname);
-            key.SetValue("Name", nameInfoString);
-            key.SetValue("Description", descriptionInfoString);
-            key.SetValue("CapeVersion", versionInfoString);
-            key.SetValue("ComponentVersion", versionNumber);
-            key.SetValue("VendorURL", companyURLInfoString);
-            key.SetValue("HelpURL", helpURLInfoString);
-            key.SetValue("About", aboutInfoString);
-            key.Close();
+            descriptKey.Close();
+            classKey.Close();
         }
         /// <summary>
         ///	This function controls the removal of the class from the COM registry when the class is unistalled.  
@@ -424,18 +418,14 @@ namespace CapeOpen
         [System.Runtime.InteropServices.ComUnregisterFunction()]
         public static void UnregisterFunction(Type t)
         {
+            UnregisterHelper(Microsoft.Win32.RegistryKey.OpenBaseKey(Microsoft.Win32.RegistryHive.ClassesRoot, Microsoft.Win32.RegistryView.Registry32), t);
+            UnregisterHelper(Microsoft.Win32.RegistryKey.OpenBaseKey(Microsoft.Win32.RegistryHive.ClassesRoot, Microsoft.Win32.RegistryView.Registry64), t);
+        }
+
+        private static void UnregisterHelper(Microsoft.Win32.RegistryKey baseKey, Type t)
+        {
             String keyname = String.Concat("CLSID\\{", t.GUID.ToString(), "}");
-            Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(keyname, true);
-            String[] keyNames = key.GetSubKeyNames();
-            for (int i = 0; i < keyNames.Length; i++)
-            {
-                key.DeleteSubKeyTree(keyNames[i]);
-            }
-            String[] valueNames = key.GetValueNames();
-            for (int i = 0; i < valueNames.Length; i++)
-            {
-                key.DeleteValue(valueNames[i]);
-            }
+            baseKey.DeleteSubKeyTree(keyname, false);
         }
 
         /// <summary>

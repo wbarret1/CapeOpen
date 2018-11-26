@@ -184,17 +184,17 @@ namespace CapeOpen
             units = new System.Collections.ArrayList();
             unitCategories = new System.Collections.ArrayList();
             System.AppDomain domain = System.AppDomain.CurrentDomain;
-            System.Reflection.Assembly myAssembly = System.Reflection.Assembly.GetExecutingAssembly();
-            System.IO.Stream resStream = myAssembly.GetManifestResourceStream("CapeOpen.Resources.units.xml.resources");
-            System.Resources.ResourceReader resReader = new System.Resources.ResourceReader(resStream);
-            System.Collections.IDictionaryEnumerator en = resReader.GetEnumerator();
-            String temp = String.Empty;
-            while (en.MoveNext())
-            {
-                if (en.Key.ToString() == "units") temp = en.Value.ToString();
-            }
+            //System.Reflection.Assembly myAssembly = System.Reflection.Assembly.GetExecutingAssembly();
+            //System.IO.Stream resStream = myAssembly.GetManifestResourceStream("CapeOpen.Resources.units.xml.resources");
+            //System.Resources.ResourceReader resReader = new System.Resources.ResourceReader(resStream);
+            //System.Collections.IDictionaryEnumerator en = resReader.GetEnumerator();
+            //String temp = String.Empty;
+            //while (en.MoveNext())
+            //{
+            //    if (en.Key.ToString() == "units") temp = en.Value.ToString();
+            //}
             System.Xml.XmlDocument reader = new System.Xml.XmlDocument();
-            reader.LoadXml(temp);
+            reader.LoadXml(Properties.Resources.units);
             System.Xml.XmlNodeList list = reader.SelectNodes("Units/Unit_Specs");
             System.Globalization.CultureInfo ci = new System.Globalization.CultureInfo(0x0409, false);
             for (int i = 0; i < list.Count; i++)
@@ -224,14 +224,14 @@ namespace CapeOpen
                     units.Add(newUnit);
                 }
             }
-            resStream = myAssembly.GetManifestResourceStream("CapeOpen.Resources.unitCategories.xml.resources");
-            resReader = new System.Resources.ResourceReader(resStream);
-            en = resReader.GetEnumerator();
-            while (en.MoveNext())
-            {
-                if (en.Key.ToString() == "unitCategories") temp = en.Value.ToString();
-            }
-            reader.LoadXml(temp);
+            //resStream = myAssembly.GetManifestResourceStream("CapeOpen.Resources.unitCategories.xml.resources");
+            //resReader = new System.Resources.ResourceReader(resStream);
+            //en = resReader.GetEnumerator();
+            //while (en.MoveNext())
+            //{
+            //    if (en.Key.ToString() == "unitCategories") temp = en.Value.ToString();
+            //}
+            reader.LoadXml(Properties.Resources.unitCategories);
             list = reader.SelectNodes("CategorySpecifications/Category_Spec");
             for (int i = 0; i < list.Count; i++)
             {

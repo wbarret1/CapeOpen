@@ -61,6 +61,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WARalgorithm));
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -161,32 +162,32 @@
             this.toolStripSeparator1,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.saveToolStripMenuItem.Text = "Save...";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // printToolStripMenuItem
             // 
             this.printToolStripMenuItem.Name = "printToolStripMenuItem";
-            this.printToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.printToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.printToolStripMenuItem.Text = "Print...";
             this.printToolStripMenuItem.Click += new System.EventHandler(this.printToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(118, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(105, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -218,7 +219,7 @@
             this.unitsAndStreamsTabPage.Location = new System.Drawing.Point(4, 22);
             this.unitsAndStreamsTabPage.Name = "unitsAndStreamsTabPage";
             this.unitsAndStreamsTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.unitsAndStreamsTabPage.Size = new System.Drawing.Size(761, 497);
+            this.unitsAndStreamsTabPage.Size = new System.Drawing.Size(911, 497);
             this.unitsAndStreamsTabPage.TabIndex = 0;
             this.unitsAndStreamsTabPage.Text = "Units and Streams";
             this.unitsAndStreamsTabPage.UseVisualStyleBackColor = true;
@@ -362,7 +363,7 @@
             this.impactWeightsTabPage.Location = new System.Drawing.Point(4, 22);
             this.impactWeightsTabPage.Name = "impactWeightsTabPage";
             this.impactWeightsTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.impactWeightsTabPage.Size = new System.Drawing.Size(761, 497);
+            this.impactWeightsTabPage.Size = new System.Drawing.Size(911, 497);
             this.impactWeightsTabPage.TabIndex = 1;
             this.impactWeightsTabPage.Text = "Impact Weights";
             this.impactWeightsTabPage.UseVisualStyleBackColor = true;
@@ -750,6 +751,7 @@
             this.ClientSize = new System.Drawing.Size(919, 547);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "WARalgorithm";
             this.Text = "WARalgorithm";

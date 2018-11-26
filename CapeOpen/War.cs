@@ -248,17 +248,17 @@ namespace CapeOpen
             warDataTable.Columns.Add("Acidification Potential", typeof(double));
             warDataTable.Columns.Add("Acidification Potential Source", typeof(System.String));
             System.AppDomain domain = System.AppDomain.CurrentDomain;
-            System.Reflection.Assembly myAssembly = System.Reflection.Assembly.GetExecutingAssembly();
-            String[] resources = myAssembly.GetManifestResourceNames();
-            System.IO.Stream resStream = myAssembly.GetManifestResourceStream("CapeOpen.Resources.WARdata.xml.resources");
-            System.Resources.ResourceReader resReader = new System.Resources.ResourceReader(resStream);
-            System.Collections.IDictionaryEnumerator en = resReader.GetEnumerator();
-            String temp = String.Empty;
-            while (en.MoveNext())
-            {
-                if (en.Key.ToString() == "WARdata") temp = en.Value.ToString();
-            }
-            this.AddData(temp);
+            //System.Reflection.Assembly myAssembly = System.Reflection.Assembly.GetExecutingAssembly();
+            //String[] resources = myAssembly.GetManifestResourceNames();
+            //System.IO.Stream resStream = myAssembly.GetManifestResourceStream("CapeOpen.Resources.WARdata.xml.resources");
+            //System.Resources.ResourceReader resReader = new System.Resources.ResourceReader(resStream);
+            //System.Collections.IDictionaryEnumerator en = resReader.GetEnumerator();
+            //String temp = String.Empty;
+            //while (en.MoveNext())
+            //{
+            //    if (en.Key.ToString() == "WARdata") temp = en.Value.ToString();
+            //}
+            this.AddData(Properties.Resources.WARdata);
         }
 
         /// <summary>
